@@ -1,0 +1,81 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id    Int     @id @default(autoincrement())
+  email String  @unique
+  password  String
+  role String @default("USER")
+  bascket Bascket?
+  bascketId Int @unique
+  raiting Rating []
+}
+
+model Bascket {
+  id Int @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  userId Int @unique
+  bascketDevice BascketDevice []
+}
+
+model BascketDevice {
+  id Int @id @default(autoincrement())
+  bascket Bascket @relation(fields: [basketId], references: [id])
+  basketId Int
+  device Device @relation(fields: [deviceId], references: [id])
+  deviceId Int
+}
+
+model Device {
+  id Int @id @default(autoincrement())
+  name String
+  price Int
+  raiting Int
+  img String
+  deviceInfo DeviceInfo[]
+  bascketDevice BascketDevice[]
+  rating Rating[]
+  type Type @relation(fields: [typeId], references: [id])
+  typeId Int
+  brand Brand @relation(fields: [brandId],references: [id])
+  brandId Int
+}
+
+model Type {
+  id Int @id @default(autoincrement())
+  name String @unique @default("")
+  device Device []
+  brand Brand[]
+}
+
+model Brand {
+  id Int @id @default(autoincrement())
+  name String @unique @default("")
+  brand Device[]
+  type Type[]
+}
+
+model Rating {
+  id Int @id @default(autoincrement())
+  rate Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  device Device @relation(fields: [deviceId],references: [id])
+  deviceId Int
+}
+
+model DeviceInfo {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  device Device @relation(fields:[deviceId], references: [id])
+  deviceId Int
+}
+
