@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Device" ALTER COLUMN "price" SET DATA TYPE TEXT;

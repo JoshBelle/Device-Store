@@ -12,7 +12,10 @@ class TypeController {
         return res.json(type)
     }
 
-    async getAll(req, res) {}
+    async getAll(req, res) {
+        const types = await prisma.type.findMany()
+        return res.json(types)
+    }
 
 }
 

@@ -16,6 +16,8 @@ model User {
   bascket Bascket?
   bascketId Int @unique
   raiting Rating []
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
 
 model Bascket {
@@ -23,6 +25,8 @@ model Bascket {
   user User @relation(fields: [userId], references: [id])
   userId Int @unique
   bascketDevice BascketDevice []
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
 
 model BascketDevice {
@@ -31,21 +35,24 @@ model BascketDevice {
   basketId Int
   device Device @relation(fields: [deviceId], references: [id])
   deviceId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
 
 model Device {
   id Int @id @default(autoincrement())
   name String
   price Int
-  raiting Int
   img String
-  deviceInfo DeviceInfo[]
+  deviceInfo DeviceInfo[] @relation(name: "info")
   bascketDevice BascketDevice[]
   rating Rating[]
   type Type @relation(fields: [typeId], references: [id])
   typeId Int
   brand Brand @relation(fields: [brandId],references: [id])
   brandId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
 
 model Type {
@@ -53,6 +60,8 @@ model Type {
   name String @unique @default("")
   device Device []
   brand Brand[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
 
 model Brand {
@@ -60,6 +69,8 @@ model Brand {
   name String @unique @default("")
   brand Device[]
   type Type[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
 
 model Rating {
@@ -69,13 +80,18 @@ model Rating {
   userId Int
   device Device @relation(fields: [deviceId],references: [id])
   deviceId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
 }
 
 model DeviceInfo {
   id Int @id @default(autoincrement())
   title String
   description String
-  device Device @relation(fields:[deviceId], references: [id])
+  device Device @relation(name:"info", fields:[deviceId], references: [id])
   deviceId Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+
 }
 

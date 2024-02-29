@@ -1,9 +1,11 @@
 require('dotenv').config();
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const { PrismaClient } = require('@prisma/client');
 const cors = require('cors');
 const router = require('./routes/index');
-const errorHandler = require('./middleware/ErrorHandlerMiddleware')
+const errorHandler = require('./middleware/ErrorHandlerMiddleware');
+const path = require('path');
 
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 5000;
@@ -12,10 +14,12 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, 'static')));
+app.use(fileUpload({}));
 app.use('/api', router);
 
 // Обработка ошибки, последний middleware
-app.use(errorHandler)
+app.use(errorHandler);
 
 const start = async () => {
     try {
