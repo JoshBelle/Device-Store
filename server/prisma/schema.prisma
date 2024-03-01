@@ -14,7 +14,7 @@ model User {
   password  String
   role String @default("USER")
   bascket Bascket?
-  bascketId Int @unique
+  bascketId Int @default(autoincrement())
   raiting Rating []
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt @default(now())
@@ -32,7 +32,7 @@ model Bascket {
 model BascketDevice {
   id Int @id @default(autoincrement())
   bascket Bascket @relation(fields: [basketId], references: [id])
-  basketId Int
+  basketId Int @default(autoincrement())
   device Device @relation(fields: [deviceId], references: [id])
   deviceId Int
   createdAt DateTime @default(now())

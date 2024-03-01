@@ -3,6 +3,7 @@ const path = require('path');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 const ApiError = require('../error/ApiError');
+const { DeviceInfo } = require('@prisma/client');
 
 class DeviceController {
     async create(req, res, next) {
@@ -14,7 +15,7 @@ class DeviceController {
 
             const device = await prisma.device.create({
                 data: {
-                    name,
+                    name, 
                     price,
                     brandId: parseInt(brandId),
                     typeId: parseInt(typeId),
@@ -107,7 +108,18 @@ class DeviceController {
     }
     
     
-    async getOne(req, res) {} 
+    async getOne(req, res) {
+        const { id } = req.params;
+        const device = await prisma.device.findUnique({
+            where: { id: parseInt(id) },
+            include: {
+                deviceInfo: true
+            }
+        });
+        return res.json(device);
+    }
+    
+    
 }
 
 module.exports = new DeviceController();
