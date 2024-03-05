@@ -1,21 +1,23 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { authRoutes, publicRoutes } from '../routes';
-
+import RedirectRoutes from '../utils/routes/RedirectRoutes';
+import { useContext } from 'react';
+import { Context } from '..';
 
 const AppRouter = () => {
-    const isAuth = true; 
-
+    const { user } = useContext(Context);
+    console.log(user);
     return (
         <Routes>
-            {isAuth && authRoutes.map(({ path, component: Component }) => (
-                <Route key={path} path={path} component={Component} exact />
+            {user &&
+                authRoutes.map(({ path, Component }) => (
+                    <Route key={path} path={path} element={<Component />} />
+                ))}
+            {publicRoutes.map(({ path, Component }) => (
+                <Route key={path} path={path} element={<Component />} />
             ))}
-
-            
-            {publicRoutes.map(({ path, component: Component }) => (
-                <Route key={path} path={path} component={Component} exact />
-            ))}
-        </Routes> 
+            <Route path="*" element={<RedirectRoutes />} />
+        </Routes>
     );
 };
 

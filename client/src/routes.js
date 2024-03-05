@@ -1,42 +1,48 @@
 import Admin from './pages/Admin';
-import Auth from './pages/Auth';
 import Bascket from './pages/Bascket';
 import DevicePages from './pages/DevicePages';
+import LogIn from './pages/LogIn';
+import Main from './pages/Main';
+import Registration from './pages/Registration';
 import Shop from './pages/Shop';
 import {
     ADMIN_ROUTE,
-    BASCKET_ROUTE,
+    BASKET_ROUTE,
     DEVICE_ROUTE,
     LOGIN_ROUTE,
+    MAIN_ROUTE,
     REGISTRATION_ROUTE,
-    SHOP_ROUTE,
-} from './utils/consts';
+} from './utils/constant';
 
 export const authRoutes = [
     {
         path: ADMIN_ROUTE,
-        component: Admin,
+        Component: Admin,
     },
     {
-        path: BASCKET_ROUTE,
-        component: Bascket,
+        path: BASKET_ROUTE,
+        Component: Bascket,
     },
 ];
 export const publicRoutes = [
     {
+        path: MAIN_ROUTE,
+        Component: Main,
+    },
+    {
         path: LOGIN_ROUTE,
-        component: Auth,
+        Component: LogIn,
     },
     {
         path: REGISTRATION_ROUTE,
-        component: Auth,
+        Component: Registration,
     },
     {
-        path: SHOP_ROUTE,
-        component: Shop,
+        path: DEVICE_ROUTE,
+        Component: Shop,
     },
     {
         path: DEVICE_ROUTE + '/:id',
-        component: DevicePages,
+        Component: DevicePages,
     },
 ];
